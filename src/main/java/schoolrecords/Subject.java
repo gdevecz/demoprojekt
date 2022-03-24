@@ -1,7 +1,5 @@
 package schoolrecords;
 
-import javax.persistence.*;
-
 public class Subject {
 
     private Long id;
