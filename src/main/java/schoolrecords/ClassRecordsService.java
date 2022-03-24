@@ -20,10 +20,8 @@ public class ClassRecordsService {
 
     public double calculateClassAverage() {
         List<Student> students = studentService.listAllStudents();
-        System.out.println(students.size());
         return students.stream()
                 .mapToDouble(Student::calculateAverage)
-                .peek(System.out::println)
                 .average()
                 .orElseThrow(() -> new IllegalStateException("No grades."));
     }
