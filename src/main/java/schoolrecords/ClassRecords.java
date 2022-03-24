@@ -8,11 +8,11 @@ public class ClassRecords {
 
     private String className;
 
-    private ClassrecordsService classrecordsService;
+    private ClassRecordsService classrecordsService;
 
     private Random random;
 
-    public ClassRecords(String className, ClassrecordsService classrecordsService, Random random) {
+    public ClassRecords(String className, ClassRecordsService classrecordsService, Random random) {
         this.className = className;
         this.classrecordsService = classrecordsService;
         this.random = random;
@@ -40,12 +40,12 @@ public class ClassRecords {
     }
 
     public Student repetition() {
-        List<Student> students = classrecordsService.listaAllStudents();
+        List<Student> students = classrecordsService.listAllStudents();
         return students.get(random.nextInt(students.size()));
     }
 
     public List<StudyResultByName> listStudyResults() {
-        List<Student> students = classrecordsService.listaAllStudents();
+        List<Student> students = classrecordsService.listAllStudents();
         List<StudyResultByName> studyResultByNames = new ArrayList<>();
         students.forEach(student -> studyResultByNames.add(new StudyResultByName(
                 student.getStudentName(), student.calculateAverage()

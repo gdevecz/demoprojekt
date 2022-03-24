@@ -36,6 +36,7 @@ class TaughtSubjectsDaoIT {
         Teacher teacher = teachersDao.findTeacherById(teacher_id);
         long subject_id = subjectsDao.saveSubject("Matematika");
         Subject subject = subjectsDao.findSubjectById(subject_id);
+        taughtSubjectsDao.saveTaughtSubject(teacher,subject);
 
         assertEquals(1L, taughtSubjectsDao.listsAllTaughtSubjects().get(0).getTeacherId());
         assertEquals(1L, taughtSubjectsDao.listsAllTaughtSubjects().get(0).getSubjectId());

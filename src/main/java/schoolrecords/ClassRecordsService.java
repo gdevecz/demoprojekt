@@ -2,16 +2,16 @@ package schoolrecords;
 
 import java.util.List;
 
-public class ClassrecordsService {
+public class ClassRecordsService {
 
-    StudentService studentService;
+    private StudentService studentService;
 
-    public ClassrecordsService(StudentService studentService) {
+    public ClassRecordsService(StudentService studentService) {
         this.studentService = studentService;
     }
 
-    public void addStudent(Student student) {
-        studentService.saveStudent(student);
+    public long addStudent(Student student) {
+        return studentService.saveStudent(student);
     }
 
     public void removeStudent(Student student) {
@@ -38,7 +38,7 @@ public class ClassrecordsService {
         return studentService.loadStudent(name);
     }
 
-    public List<Student> listaAllStudents() {
+    public List<Student> listAllStudents() {
         return studentService.listAllStudents();
     }
 }

@@ -12,11 +12,12 @@ public class StudentService {
         this.studentMarkDao = studentMarkDao;
     }
 
-    public void saveStudent(Student student) {
-        studentDao.saveStudent(student.getStudentName());
+    public long saveStudent(Student student) {
+        long id = studentDao.saveStudent(student.getStudentName());
         for (Mark mark : student.getMarks()) {
             studentMarkDao.saveStudentMark(student.getId(), mark.getSubject().getId(), mark.toString());
         }
+        return id;
     }
 
     public void removeStudent(Student student) {

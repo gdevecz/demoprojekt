@@ -15,11 +15,11 @@ public class StudentMarkDao {
         this.subjectsDao = subjectsDao;
     }
 
-    public void saveStudentMark(Long studentId, Long subjectId, String mark) {
+    public void saveStudentMark(Long studentId, Long subjectId, String evaluation) {
         jdbcTemplate.update(
                 //language=sql
-                "insert into students_marks(student_id, subject_id, mark) values(?,?,?)",
-                studentId, subjectId, mark);
+                "insert into students_marks(student_id, subject_id, evaluation) values(?,?,?)",
+                studentId, subjectId, evaluation);
     }
 
     public List<StudentMark> listAllMarks() {
@@ -29,7 +29,7 @@ public class StudentMarkDao {
                 (rs, rowNum) -> new StudentMark(
                         rs.getLong("student_id"),
                         rs.getLong("subject_id"),
-                        rs.getString("mark")
+                        rs.getString("evaluation")
                 )
         );
     }
@@ -39,7 +39,7 @@ public class StudentMarkDao {
                 //language=sql
                 "select * from students_marks where student_id = ?",
                 (rs, rowNum) -> new Mark(
-                        MarkType.valueOf(rs.getString("mark")),
+                        MarkType.valueOf(rs.getString("evaluation")),
                         subjectsDao.findSubjectById(rs.getLong("subject_id"))
                 ),
                 studentId
@@ -51,7 +51,7 @@ public class StudentMarkDao {
                 //language=sql
                 "select * from students_marks where subject_id = ?",
                 (rs, rowNum) -> new Mark(
-                        MarkType.valueOf(rs.getString("mark")),
+                        MarkType.valueOf(rs.getString("evaluation")),
                         subjectsDao.findSubjectById(rs.getLong("subject_id"))
                 ),
                 subjectId
@@ -63,7 +63,7 @@ public class StudentMarkDao {
                 //language=sql
                 "select * from students_marks where student_id = ? AND subject_id = ?",
                 (rs, rowNum) -> new Mark(
-                        MarkType.valueOf(rs.getString("mark")),
+                        MarkType.valueOf(rs.getString("evaluation")),
                         subjectsDao.findSubjectById(rs.getLong("subject_id"))
                 ),
                 studentId, subjectId
