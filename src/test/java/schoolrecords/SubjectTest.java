@@ -1,5 +1,6 @@
 package schoolrecords;
 
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,11 +18,9 @@ class SubjectTest {
 
     @Test
     void testCreateSubjectWithIdAndName() {
-        Subject result = new Subject(1L,"Földrajz");
+        Subject result = new Subject(1L, "Földrajz");
 
         assertEquals(1L, result.getId());
         assertEquals("Földrajz", result.getSubjectName());
-
     }
-
 }
