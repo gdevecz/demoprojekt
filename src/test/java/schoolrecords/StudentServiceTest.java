@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,6 +29,8 @@ class StudentServiceTest {
         StudentDao studentDao = new StudentDao(dataSource);
         StudentMarkDao studentMarkDao = new StudentMarkDao(dataSource, subjectsDao);
         studentService = new StudentService(studentDao, studentMarkDao);
+
+        subjectsDao.saveSubject("Matematika");
     }
 
     @Test
@@ -45,6 +48,18 @@ class StudentServiceTest {
         Student student = studentService.loadStudent("John Doe").get(0);
         Subject subject = new Subject("Matematika");
         Mark mark = new Mark(MarkType.A, subject);
-        studentService.grading(student,mark);
+        studentService.grading(student, mark);
+        List<Mark> marks = studentService.loadStudent("John Doe").get(0).getMarks();
+        marks.forEach(System.out::println);
+        System.out.println();
+        assertEquals(MarkType.A, studentService.loadStudent("John Doe").get(0).getMarks().get(0));
+    }
+
+    @Test
+    void listAllStudents() {
+        long id = studentService.saveStudent(new Student("John Doe"));
+        List<Student> students = studentService.listAllStudents();
+        assertEquals(Arrays.asList("John Doe"), students.stream().map(Student::getStudentName).toList());
+
     }
 }

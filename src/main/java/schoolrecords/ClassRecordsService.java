@@ -20,14 +20,19 @@ public class ClassRecordsService {
 
     public double calculateClassAverage() {
         List<Student> students = studentService.listAllStudents();
+        System.out.println(students.size());
         return students.stream()
                 .mapToDouble(Student::calculateAverage)
+                .peek(System.out::println)
                 .average()
                 .orElseThrow(() -> new IllegalStateException("No grades."));
     }
 
     public double calculateClassAverageBySubject(Subject subject) {
         List<Student> students = studentService.listAllStudents();
+        for (Student student : students) {
+            System.out.println(student.getStudentName()+":"+student.getMarks());
+        }
         return students.stream()
                 .mapToDouble(student->student.calculateSubjectAverage(subject))
                 .average()

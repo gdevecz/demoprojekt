@@ -15,7 +15,7 @@ public class StudentService {
     public long saveStudent(Student student) {
         long id = studentDao.saveStudent(student.getStudentName());
         for (Mark mark : student.getMarks()) {
-            studentMarkDao.saveStudentMark(student.getId(), mark.getSubject().getId(), mark.toString());
+            studentMarkDao.saveStudentMark(student.getId(), mark.getSubject().getId(), mark.getMarkType().toString());
         }
         return id;
     }
@@ -32,19 +32,23 @@ public class StudentService {
 
     public List<Student> listAllStudents() {
         List<Student> students = studentDao.loadAllStudents();
-        loadStudentsMarks(students);
+        return loadStudentsMarks(students);
+    }
+
+    private List<Student> loadStudentsMarks(List<Student> students) {
+        for (Student student : students) {
+            List<Mark> marks = studentMarkDao.findMarksByStudentId(student.getId());
+            for (Mark mark : marks) {
+                student.addMark(mark);
+                System.out.println(mark);
+            }
+        }
         return students;
     }
 
-    private void loadStudentsMarks(List<Student> students) {
-        for (Student student : students) {
-            List<Mark> marks = studentMarkDao.findMarksByStudentId(student.getId());
-            marks.forEach(m -> student.grading(m));
-        }
-    }
-
     public void grading(Student student, Mark mark) {
-        studentMarkDao.saveStudentMark(student.getId(), mark.getSubject().getId(), mark.toString());
+        System.out.println("grading: "+mark.getMarkType().toString());
+        studentMarkDao.saveStudentMark(student.getId(), mark.getSubject().getId(), mark.getMarkType().toString());
     }
 
     public double calculateAverage(Student student) {

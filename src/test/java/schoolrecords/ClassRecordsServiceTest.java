@@ -81,8 +81,9 @@ class ClassRecordsServiceTest {
         Student anotherStudent = classrecordsService.findStudentByName("Jane Doe").get(0);
         Subject subject = subjectsDao.findSubjectById(1);
         Mark mark = new Mark(MarkType.A, subject);
-        studentService.grading(student, mark);
 
+        studentService.grading(student, mark);
+        System.out.println(mark.getMarkType());
         double avg = classrecordsService.calculateClassAverage();
     }
 }
