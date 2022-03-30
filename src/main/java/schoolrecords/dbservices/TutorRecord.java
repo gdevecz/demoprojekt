@@ -1,4 +1,4 @@
-package schoolrecords.dbservice;
+package schoolrecords.dbservices;
 
 import java.util.Objects;
 

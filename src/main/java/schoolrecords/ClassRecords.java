@@ -1,6 +1,6 @@
 package schoolrecords;
 
-import schoolrecords.dbservice.SchoolRecordsService;
+import schoolrecords.dbservices.SchoolRecordsService;
 
 import java.util.List;
 import java.util.Random;

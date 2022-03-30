@@ -1,4 +1,4 @@
-package schoolrecords.dbservice;
+package schoolrecords.dbservices;
 
 public class StudentRecord {
 

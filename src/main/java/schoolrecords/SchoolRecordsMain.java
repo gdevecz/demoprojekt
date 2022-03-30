@@ -3,7 +3,7 @@ package schoolrecords;
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.flywaydb.core.Flyway;
 import schoolrecords.consoUi.SchoolRecordsUI;
-import schoolrecords.dbservice.*;
+import schoolrecords.dbservices.*;
 
 public class SchoolRecordsMain {
 
@@ -17,11 +17,14 @@ public class SchoolRecordsMain {
         flyway.clean();
         flyway.migrate();
 
+//        if (args.length > 0 && "test".equals(args[1])) {
+//            Flyway f = Flyway.configure().locations("/src/resources/data").dataSource(dataSource).load();
+//            f.migrate();
+//        }
         SubjectsDao subjectsDao = new SubjectsDao(dataSource);
         TutorsDao tutorsDao = new TutorsDao(dataSource);
         StudentsDao studentsDao = new StudentsDao(dataSource);
         MarksDao marksDao = new MarksDao(dataSource);
-
 
 
         SchoolRecordsController src = new SchoolRecordsController(

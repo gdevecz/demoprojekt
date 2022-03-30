@@ -1,4 +1,4 @@
-package schoolrecords.dbservice;
+package schoolrecords.dbservices;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.flywaydb.core.Flyway;

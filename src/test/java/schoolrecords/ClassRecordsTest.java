@@ -5,7 +5,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import schoolrecords.dbservice.*;
+import schoolrecords.dbservices.*;
 
 import java.util.Arrays;
 import java.util.List;

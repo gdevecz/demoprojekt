@@ -1,4 +1,4 @@
-package schoolrecords.dbservice;
+package schoolrecords.dbservices;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;

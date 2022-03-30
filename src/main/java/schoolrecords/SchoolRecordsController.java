@@ -1,7 +1,7 @@
 package schoolrecords;
 
 import schoolrecords.consoUi.SchoolRecordsUI;
-import schoolrecords.dbservice.SchoolRecordsService;
+import schoolrecords.dbservices.SchoolRecordsService;
 
 import java.util.ArrayList;
 import java.util.List;

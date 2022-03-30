@@ -1,4 +1,4 @@
-package schoolrecords.dbservice;
+package schoolrecords.dbservices;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -48,7 +48,8 @@ public class SubjectsDao {
     }
 
     public SubjectRecord findSubjectRecordById(long id) {
-        List<SubjectRecord> result = jdbcTemplate.query(//language=sql
+        List<SubjectRecord> result = jdbcTemplate.query(
+                //language=sql
                 "select * from subjects where id = ?",
                 (rs, rowNum) -> new SubjectRecord(
                         id,
