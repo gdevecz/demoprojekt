@@ -7,7 +7,7 @@ public class StudyResultByName {
     private double studyAverage;
 
     public StudyResultByName(String studentName, double studyAverage) {
-        Validator.isNameValid(studentName);
+        schoolrecords.Validator.isNameValid(studentName);
         this.studentName = studentName;
         this.studyAverage = studyAverage;
     }
@@ -18,5 +18,10 @@ public class StudyResultByName {
 
     public double getStudyAverage() {
         return studyAverage;
+    }
+
+    @Override
+    public String toString() {
+        return studentName + " tanulmányi átlaga " + studyAverage;
     }
 }

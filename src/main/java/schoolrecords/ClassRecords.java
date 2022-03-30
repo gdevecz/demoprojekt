@@ -1,6 +1,7 @@
 package schoolrecords;
 
-import java.util.ArrayList;
+import schoolrecords.dbservice.SchoolRecordsService;
+
 import java.util.List;
 import java.util.Random;
 
@@ -8,50 +9,66 @@ public class ClassRecords {
 
     private String className;
 
-    private ClassRecordsService classrecordsService;
-
     private Random random;
 
-    public ClassRecords(String className, ClassRecordsService classrecordsService, Random random) {
+    private SchoolRecordsService srs;
+
+    public ClassRecords(String className, Random random, SchoolRecordsService srs) {
         this.className = className;
-        this.classrecordsService = classrecordsService;
         this.random = random;
+        this.srs = srs;
     }
 
-
-    public void addStudent(Student student) {
-        classrecordsService.addStudent(student);
+    public boolean addStudent(Student student) {
+        return srs.saveStudent(student);
     }
 
-    public void removeStudent(Student student) {
-        classrecordsService.removeStudent(student);
+    public boolean removeStudent(Student student) {
+        return srs.deleteStudent(student);
     }
 
     public double calculateClassAverage() {
-        return classrecordsService.calculateClassAverage();
+        return srs.calculateClassAverage();
     }
 
     public double calculateClassAverageBySubject(Subject subject) {
-        return classrecordsService.calculateClassAverageBySubject(subject);
+        return srs.calculateClassAverageBySubjectName(subject.getSubjectName());
     }
 
-    public List<Student> findStudentByName(String name) {
-        return classrecordsService.findStudentByName(name);
+    public Student findStudentByName(String studentName) {
+        Validator.isStudentNameValid(studentName);
+        Validator.isStudentsExist(srs.listAllStudents());
+        return srs.findStudentByName(studentName);
     }
 
     public Student repetition() {
-        List<Student> students = classrecordsService.listAllStudents();
-        return students.get(random.nextInt(students.size()));
+        List<String> students = srs.listAllStudentNames();
+        return srs.findStudentByName(students.get(random.nextInt(students.size())));
     }
 
     public List<StudyResultByName> listStudyResults() {
-        List<Student> students = classrecordsService.listAllStudents();
-        List<StudyResultByName> studyResultByNames = new ArrayList<>();
-        students.forEach(student -> studyResultByNames.add(new StudyResultByName(
-                student.getStudentName(), student.calculateAverage()
-        )));
-        return studyResultByNames;
+        return srs.listStudyResults();
     }
 
+    public StudyResultByName studentStudyResult(String name) {
+        return srs.findStudyResultByName(name);
+    }
+
+    public String listStudentNames() {
+        return String.join(", ", srs.listAllStudentNames());
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public SchoolRecordsService getSrs() {
+        return srs;
+    }
 }
+
 
