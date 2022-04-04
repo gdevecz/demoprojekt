@@ -9,24 +9,18 @@ public class Mark {
     private Tutor tutor;
 
     public Mark(MarkType markType, Subject subject, Tutor tutor) {
-        Validator.isSubjectAndTutorValid(subject, tutor);
         this.markType = markType;
         this.subject = subject;
         this.tutor = tutor;
     }
 
     public Mark(String markType, Subject subject, Tutor tutor) {
-        Validator.isSubjectAndTutorValid(subject, tutor);
-        Validator.isMarkTypeTextValid(markType);
-        this.markType = MarkType.of(markType);
-        this.subject = subject;
-        this.tutor = tutor;
-
+        this(MarkType.of(markType), subject, tutor);
     }
 
-    @Override
-    public String toString() {
-        return markType.getEvaluation() + "(" + markType.getGrade() + ")";
+    public Mark(MarkType markType, Subject subject) {
+        this.markType = markType;
+        this.subject = subject;
     }
 
     public MarkType getMarkType() {
@@ -39,5 +33,14 @@ public class Mark {
 
     public Tutor getTutor() {
         return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
+
+    @Override
+    public String toString() {
+        return subject.getName() + ": " + markType.getEvaluation() + "(" + markType.getGrade() + ")";
     }
 }

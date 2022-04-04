@@ -1,111 +1,54 @@
 package schoolrecords;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Validator {
 
-    public static boolean isStudentsValid(List<Student> students) {
-        if (students.isEmpty()) {
-            throw new ArithmeticException("No student in the class, average calculation aborted!");
+    public boolean isClassRecordsValid(String name, Random random, List<Student> students) {
+        if (random == null) {
+            throw new IllegalArgumentException("Random is null.");
         }
-        return true;
+        if (students == null) {
+            throw new IllegalArgumentException("Students is null.");
+        }
+        return isNameValid(name);
     }
 
-    public static boolean isMarkValid(schoolrecords.Mark mark) {
-        if (mark == null) {
-            throw new NullPointerException("Mark must not be null!");
-        }
-        return true;
-    }
-
-    public static boolean isSubjectValid(Subject subject) {
+    public boolean isSubjectValid(Subject subject) {
         if (subject == null) {
-            throw new NullPointerException("Subject must not be null.");
+            throw new IllegalArgumentException("Subject is null.");
         }
-        return true;
+        return isNameValid(subject.getName());
     }
 
-    public static boolean isStudentValid(Student student) {
+    public boolean isTutorValid(Tutor tutor) {
+        if (tutor == null) {
+            throw new IllegalArgumentException("Tutor is null.");
+        }
+        if (tutor.getTaughtSubjects() == null || tutor.getTaughtSubjects().isEmpty()) {
+            throw new IllegalArgumentException(tutor.getName() + "'s taughtSubjects cannot be null or empty.");
+        }
+        return isNameValid(tutor.getName());
+    }
+
+    public boolean isStudentValid(Student student) {
         if (student == null) {
-            throw new NullPointerException("Student can not be null.");
+            throw new IllegalArgumentException("Student is null.");
+        }
+        return isNameValid(student.getName());
+    }
+
+    public boolean isNameValid(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("The name cannot be null or empty.");
         }
         return true;
     }
 
-    public static boolean isStudentNameValid(String name) {
-        if (name == null) {
-            throw new NullPointerException("Student name must not be null.");
-        }
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("Student name must not be empty!");
-        }
-        return true;
-    }
-
-    public static boolean isNameValid(String name) {
-        if (name == null) {
-            throw new NullPointerException("The name must not be null.");
-        }
-        if (name.isBlank()) {
-            throw new IllegalArgumentException("The name must not be empty.");
-        }
-        return true;
-    }
-
-    public static boolean isValid(String string, String validationSubject) {
-        if (string == null) {
-            throw new NullPointerException("The " + validationSubject + " must not be null.");
-        }
-        if (string.isBlank()) {
-            throw new IllegalArgumentException("The " + validationSubject + " must not be empty.");
-        }
-        return true;
-    }
-
-    public static boolean isSubjectAndTutorValid(Subject subject, Tutor tutor) {
-        if (subject == null || tutor == null) {
-            throw new NullPointerException("Both subject and tutor must be provided!");
-        }
-        return true;
-    }
-
-    public static boolean isMarkTypeTextValid(String markName) {
-        return Arrays.asList(MarkType.values()).contains(markName);
-    }
-
-    public static boolean isClassAverageCalculationValid(List<Student> students) {
-        if (students.stream()
-                .flatMap(student -> student.getMarks().stream().map(Mark::getMarkType)).findAny().isEmpty()) {
-            throw new ArithmeticException("No marks present, average calculation aborted!");
-        }
-        return true;
-    }
-
-    public static boolean isClassAverageBySubjectCalculationValid(Subject subject, List<Student> students) {
-        return isClassAverageCalculationValid(students.stream()
-                .filter(student -> student.getMarks().stream()
-                        .anyMatch(mark -> subject.equals(mark.getSubject())))
-                .toList());
-    }
-
-    public static boolean isStudentsExist(List<Student> students) {
-        if (students.isEmpty()) {
-            throw new IllegalStateException("No students to search!");
-        }
-        return true;
-    }
-
-    public static boolean isStudentsExistForRepetition(List<Student> students) {
-        if (students.isEmpty()) {
-            throw new IllegalStateException("No students to select for repetition!");
-        }
-        return true;
-    }
-
-    public static boolean isOptionValid(int option, int max) {
-        if (option < 1 || option > max) {
-            throw new IllegalArgumentException("Invalid option: " + option);
+    public boolean isStudentsExist(List<Student> students) {
+        if (students == null) {
+            throw new IllegalArgumentException("Students is null.");
         }
         return true;
     }

@@ -1,7 +1,7 @@
 package schoolrecords;
 
 public enum MarkType {
-    A(5, "excellent"), B(4, "very good"), C(3, "improvement needed"), D(2, "close fail"), F(1, "fail");
+    A(5, "jeles"), B(4, "jó"), C(3, "közepes"), D(2, "elégséges"), F(1, "elégtelen");
 
     public static final String GRADE_CHARACTERS = "ABCDF";
     public static final String GRADE_NUMBERS = "54321";
@@ -29,7 +29,6 @@ public enum MarkType {
 
     private static MarkType getMarkTypeFromText(String text) {
         if (GRADE_NUMBERS.contains(text)) {
-            System.out.println(GRADE_CHARACTERS.charAt(GRADE_NUMBERS.indexOf(text)));
             return MarkType.valueOf(Character.toString(GRADE_CHARACTERS.charAt(GRADE_NUMBERS.indexOf(text))));
         }
         return MarkType.valueOf(text);

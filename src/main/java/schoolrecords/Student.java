@@ -3,50 +3,56 @@ package schoolrecords;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Student {
 
+    private Long id;
+
     private String name;
 
-    private List<Mark> marks;
+    private List<Mark> marks = new ArrayList<>();
 
-    public Student(String name) {
-        Validator.isStudentNameValid(name);
+    public Student(Long id, String name, List<Mark> marks) {
+        this.id = id;
         this.name = name;
-        marks = new ArrayList<>();
+        this.marks.addAll(marks);
     }
 
-    public Student(String name, List<Mark> marks) {
+    public Student(Long id, String name) {
+        this.id = id;
         this.name = name;
-        this.marks = marks;
     }
 
     public void grading(Mark mark) {
-        Validator.isMarkValid(mark);
         marks.add(mark);
     }
 
     public double calculateAverage() {
-        return getTwoDigitPlaceNumber(marks.stream()
-                .mapToInt(mark-> mark.getMarkType().getGrade())
-                .average()
-                .orElse(0.0));
+        return marks.stream()
+                .map(Mark::getMarkType)
+                .mapToInt(MarkType::getGrade)
+                .average().orElse(0.0);
     }
 
     public double calculateSubjectAverage(Subject subject) {
-        return getTwoDigitPlaceNumber(marks.stream()
+        return marks.stream()
                 .filter(mark -> subject.equals(mark.getSubject()))
-                .mapToInt(mark-> mark.getMarkType().getGrade())
-                .average()
-                .orElse(0.0));
+                .map(Mark::getMarkType)
+                .mapToInt(MarkType::getGrade)
+                .average().orElse(0.0);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name).append(" marks:");
-        marks.forEach(mark -> sb.append(" ").append(mark.getSubject().getSubjectName()).append(": ").append(mark));
-        return sb.toString();
+    public StudyResultByName getStudyResult() {
+        return new StudyResultByName(name, calculateAverage());
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -54,7 +60,7 @@ public class Student {
     }
 
     public List<Mark> getMarks() {
-        return List.copyOf(marks);
+        return marks;
     }
 
     public void setMarks(List<Mark> marks) {
@@ -74,7 +80,11 @@ public class Student {
         return Objects.hash(name);
     }
 
-    private double getTwoDigitPlaceNumber(double number) {
-        return (Math.round(number * 100)) / 100.0;
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append(" osztályzatai: ")
+                .append(marks.stream().map(Mark::toString).collect(Collectors.joining(", ")));
+        return sb.toString();
     }
 }

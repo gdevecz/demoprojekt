@@ -1,31 +1,30 @@
 package schoolrecords;
 
-import java.util.Objects;
-
 public class Subject {
 
-    private String subjectName;
+    private Long id;
 
+    private String name;
 
-    public Subject(String subjectName) {
-        this.subjectName = subjectName;
+    public Subject(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public String getSubjectName() {
-        return subjectName;
+    public Subject(String name) {
+        this.name = name;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Subject subject = (Subject) o;
-        return Objects.equals(subjectName, subject.subjectName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(subjectName);
+    public String toString() {
+        return name;
     }
 }
